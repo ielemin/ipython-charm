@@ -58,14 +58,18 @@ class AbstractCharm(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def register_magic_functions(self):
+    def register_magic_functions(self, isi):
         """Register magic functions modifying the behaviour of this class.
+        
+        :param isi: InteractiveShell instance
         """
         pass
 
     @abstractmethod
-    def unregister_magic_functions(self):
+    def unregister_magic_functions(self, isi):
         """Unregister magic functions modifying the behaviour of this class.
+        
+        :param isi: InteractiveShell instance
         """
         pass
 
@@ -120,11 +124,11 @@ class BasicTimer(AbstractCharm):
 
     # Explicit magic implementations
 
-    def register_magic_functions(self):
-        current_isi.register_magic_function(self.magic, magic_kind='line', magic_name='TIMER')
+    def register_magic_functions(self, isi):
+        isi.register_magic_function(self.magic, magic_kind='line', magic_name='TIMER')
 
-    def unregister_magic_functions(self):
-        current_isi.unregister_magic_function(None, magic_kind='line', magic_name='TIMER')
+    def unregister_magic_functions(self, isi):
+        isi.unregister_magic_function(None, magic_kind='line', magic_name='TIMER')
 
     def magic(self, spell):
         """Modify class behaviour when called with the appropriate spell
@@ -187,7 +191,7 @@ class Sorcerer:
         self.isi.events.register('post_run_cell', charm.on_post_run_cell)
         self.isi.events.register('pre_execute', charm.on_pre_execute)
         self.isi.events.register('post_execute', charm.on_post_execute)
-        charm.register_magic_functions()
+        charm.register_magic_functions(self.isi)
 
     def _revoke(self, charm):
         """Revoke a charm
@@ -202,7 +206,7 @@ class Sorcerer:
         self.isi.events.unregister('post_run_cell', charm.on_post_run_cell)
         self.isi.events.unregister('pre_execute', charm.on_pre_execute)
         self.isi.events.unregister('post_execute', charm.on_post_execute)
-        charm.unregister_magic_functions()
+        charm.unregister_magic_functions(self.isi)
 
 
 # Declare your own charms here
