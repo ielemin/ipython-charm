@@ -60,3 +60,4 @@ target/
 
 # My definitions
 .ipynb_checkpoints/*
+.gitignore~
