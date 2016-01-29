@@ -6,7 +6,7 @@
 
 A *charm* is a class implementation of AbstractCharm. It defines methods invoked by IPython cell events and magics (%). 
 
-At the moment, you have to modify the package to write your own *charm* and have it invoked at import time, like the default BasicTimer *charm*. The user need not execute any special action to have the methods called by IPython events.
+At the moment, you have to modify the package to write your own *charm* and have it **invoked** at import time, like the default BasicTimer *charm*. The user need not execute any special action to have the methods called by IPython events.
 
 In the future, you will write your own *charm* in any file, and **invoke** it in a IPython cell ; all cells executed afterwards will automatically call the relevant event-triggered methods.
 
